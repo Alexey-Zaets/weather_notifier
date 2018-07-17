@@ -1,10 +1,4 @@
-"""This is a weather notifier for UNIX-like OS.
-
-source.icons --  is a dictionary with paths for weather icons,
-source.city --  is a name of your city,
-source.key --  is an API key.
-
-"""
+"""This is a weather notifier for UNIX-like OS."""
 
 from source import key, city, icons 
 import time, subprocess, requests
