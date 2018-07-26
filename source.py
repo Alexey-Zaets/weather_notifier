@@ -1,16 +1,17 @@
+from os.path import abspath
 
 key = ''  # API key
-
 city = ''  # city name
+path = abspath('icons')
 
 icons = {
-        'clear sky': '--icon=~/weather_notifier/icons/weather-clear.svg',
-        'few clouds': '--icon=~/weather_notifier/icons/weather-few-clouds.svg',
-        'scattered clouds': '--icon=~/weather_notifier/icons/weather-clouds.svg',
-        'broken clouds': '--icon=~/weather_notifier/icons/weather-overcast.svg',
-        'shower rain': '--icon=~/weather_notifier/icons/weather-shower-scattered.svg',
-        'rain': '--icon=~/weather_notifier/icons/weather-shower.svg',
-        'thunderstorm': '--icon=~/weather_notifier/icons/weather-storm.svg',
-        'snow': '--icon=~/weather_notifier/icons/weather-snow.svg',
-        'mist': '--icon=~/weather_notifier/icons/weather-fog.svg'
+        'clear sky': '--icon={}/weather-clear.svg'.format(path),
+        'few clouds': '--icon={}/weather-few-clouds.svg'.format(path),
+        'scattered clouds': '--icon={}/weather-clouds.svg'.format(path),
+        'broken clouds': '--icon={}/weather-overcast.svg'.format(path),
+        'shower rain': '--icon={}/weather-shower-scattered.svg'.format(path),
+        'rain': '--icon={}/weather-shower.svg'.format(path),
+        'thunderstorm': '--icon={}/weather-storm.svg'.format(path),
+        'snow': '--icon={}/weather-snow.svg'.fomat(path),
+        'mist': '--icon={}/weather-fog.svg'.format(path),
         }
