@@ -22,7 +22,7 @@ def weather_message(dictionary):
     except KeyError:
         subprocess.call(['notify-send', 'Error with icons path'])
     subprocess.call(['notify-send', image, title, message])
-    time.sleep(60)
+    time.sleep(3600)
     weather_message(dictionary)
 
 def start():
