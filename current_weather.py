@@ -1,30 +1,52 @@
 """This is a weather notifier for UNIX-like OS."""
 
-from time import sleep
-from subprocess import call
-from requests import get
-from source import key, city, icons
+from source import icons 
+import time, subprocess, requests, json
 
-def weather_message():
+def weather_message(dictionary):
     """This function creates and sends messages of the  current weather forecast to the desktop."""
     api_url = 'http://api.openweathermap.org/data/2.5/weather'
     params = {
-        'q': city,
-        'units': 'metric',
-        'appid': key,
-        }
-    request = get(api_url, params=params)
+            'q': dictionary['CITY'], 
+            'units': dictionary['UNITS'], 
+            'appid': dictionary['APPID']
+            }
+    request = requests.get(api_url, params=params)
     data = request.json()
     try:
         image = icons[data['weather'][0]['description']]
         data = data['main']
-        title = 'Current weather in {}:'.format(city)
+        title = 'Current weather in {}:'.format(dictionary['CITY'])
         template = 'Temperature: {} C\nHumidity: {} %\nAtmospheric pressure: {} hPa\n'
         message = template.format(round(data['temp']), data['humidity'], data['pressure'])
     except KeyError:
-        call(['notify-send', 'Error'])
-    call(['notify-send', image, title, message])
-    sleep(3600.0)
-    weather_message()
+        subprocess.call(['notify-send', 'Error with icons path'])
+    subprocess.call(['notify-send', image, title, message])
+    time.sleep(60)
+    weather_message(dictionary)
 
-weather_message()
+def start():
+    try:
+        with open('settings.json') as f:
+            data = f.readline().rstrip()
+        dictionary = json.loads(data)
+        weather_message(dictionary)
+    except FileNotFoundError:
+            city = input('Enter your city: ').capitalize()
+            appid = input('Enter your appid key: ')
+            units = input(
+                'Enter units "imperial" for temperature in Fahrenheit \
+or "metric" for temperature in Celsius. \
+Temperature in Kelvin is used by default: '
+                )
+            data = {
+                'CITY' : city,
+                'APPID' : appid,
+                'UNITS' : units,
+            }
+            with open('settings.json', 'w') as f:
+                f.write(json.dumps(data))
+            start()
+
+if __name__ == '__main__':
+    start()
