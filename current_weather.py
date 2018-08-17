@@ -32,21 +32,23 @@ def start():
         dictionary = json.loads(data)
         weather_message(dictionary)
     except FileNotFoundError:
+        while city == '':
             city = input('Enter your city: ').capitalize()
+        while appid == '':
             appid = input('Enter your appid key: ')
-            units = input(
-                'Enter units "imperial" for temperature in Fahrenheit \
+        units = input(
+            'Enter units "imperial" for temperature in Fahrenheit \
 or "metric" for temperature in Celsius. \
 Temperature in Kelvin is used by default: '
-                )
-            data = {
-                'CITY' : city,
-                'APPID' : appid,
-                'UNITS' : units,
+            )
+        data = {
+            'CITY' : city,
+            'APPID' : appid,
+            'UNITS' : units,
             }
-            with open('settings.json', 'w') as f:
-                f.write(json.dumps(data))
-            start()
+        with open('settings.json', 'w') as f:
+            f.write(json.dumps(data))
+        start()
 
 if __name__ == '__main__':
     start()
